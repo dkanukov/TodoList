@@ -1,4 +1,3 @@
-/* esversion 6 */
 (function(){
 
 	//create and return header of app
@@ -40,15 +39,42 @@
 		return list;
 	}
 
+	function createTodoItem(name) {
+		let item = document.createElement('li');
+		let buttonGroup = document.createElement('div');
+		let doneButton = document.createElement('button');
+		let deleteButton = document.createElement('button');
+
+		item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+		item.textContent = name;
+
+		buttonGroup.classList.add('btn-group', 'btn-group-sm');
+		doneButton.classList.add('btn', 'btn-success');
+		doneButton.textContent = 'Готово';
+		deleteButton.classList.add('btn', 'btn-danger');
+		deleteButton.textContent = 'Удалить';
+
+		buttonGroup.append(doneButton, deleteButton);
+		item.append(buttonGroup);
+
+		return {
+			item,
+			buttonGroup
+		};
+	}
+
 	document.addEventListener('DOMContentLoaded', function() {
 		let container = document.getElementById('todo-app');
 
 		let todoAppTitle = createAppTitle('Список дел');
 		let todoItemForm = createTodoItemForm();
 		let	todoList = createTodoList();
+		let todoItems = [createTodoItem('go'), createTodoItem('123')];
 
 		container.append(todoAppTitle);
 		container.append(todoItemForm.form);
 		container.append(todoList);
+		todoList.append(todoItems[0].item);
+		todoList.append(todoItems[1].item);
 	});
 })();

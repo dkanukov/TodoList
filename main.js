@@ -59,7 +59,9 @@
 
 		return {
 			item,
-			buttonGroup
+			buttonGroup,
+			doneButton,
+			deleteButton
 		};
 	}
 
@@ -69,12 +71,31 @@
 		let todoAppTitle = createAppTitle('Список дел');
 		let todoItemForm = createTodoItemForm();
 		let	todoList = createTodoList();
-		let todoItems = [createTodoItem('go'), createTodoItem('123')];
 
 		container.append(todoAppTitle);
 		container.append(todoItemForm.form);
 		container.append(todoList);
-		todoList.append(todoItems[0].item);
-		todoList.append(todoItems[1].item);
+
+		//	work with submit button 
+		todoItemForm.form.addEventListener('submit', function(event){
+			event.preventDefault();
+			if (!todoItemForm.input)
+				return;
+			
+			let todoItem = createTodoItem(todoItemForm.input.value);
+
+			todoItem.doneButton.addEventListener('click', function() {
+				todoItem.item.classList.toggle('list-group-item-success');
+			});
+
+			todoItem.deleteButton.addEventListener('click', function() {
+				if (confirm("Вы уверенны?"))
+					todoItem.item.remove();
+			});
+
+			todoList.append(todoItem.item);
+
+			todoItemForm.input.value = '';
+		});
 	});
 })();

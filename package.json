@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"install": "npm install -g browser-sync",
-	"serve": "browser-sync start --server --files *.html *.js *.css"
+    "install": "npm install -g browser-sync",
+    "serve": "browser-sync start --server --files *.html *.js *.css"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/dkanukov/todo_list/issues"
   },
-  "homepage": "https://github.com/dkanukov/todo_list#readme"
+  "homepage": "https://github.com/dkanukov/todo_list#readme",
+  "devDependencies": {
+    "eslint": "^8.7.0"
+  }
 }

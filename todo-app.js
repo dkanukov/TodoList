@@ -65,10 +65,9 @@
 		};
 	}
 
-	document.addEventListener('DOMContentLoaded', function() {
-		let container = document.getElementById('todo-app');
+	function createTodoApp(container, title = 'Мои дела') {
 
-		let todoAppTitle = createAppTitle('Список дел');
+		let todoAppTitle = createAppTitle(title);
 		let todoItemForm = createTodoItemForm();
 		let	todoList = createTodoList();
 
@@ -79,7 +78,7 @@
 		//	work with submit button 
 		todoItemForm.form.addEventListener('submit', function(event){
 			event.preventDefault();
-			if (!todoItemForm.input)
+			if (!todoItemForm.input.value)
 				return;
 			
 			let todoItem = createTodoItem(todoItemForm.input.value);
@@ -97,5 +96,6 @@
 
 			todoItemForm.input.value = '';
 		});
-	});
+	}
+	window.createTodoApp = createTodoApp;
 })();

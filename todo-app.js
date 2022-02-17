@@ -107,6 +107,8 @@
 			let todoStorageItem = createTodoItem(element.value);
 			todoStorageItem.doneButton.addEventListener('click', function() {
 				todoStorageItem.item.classList.toggle('list-group-item-success');
+				element.status = !element.status;
+				localStorage.setItem(my_key, JSON.stringify(storage));
 			});
 			todoStorageItem.deleteButton.addEventListener('click', function() {
 				if (confirm("Вы уверенны?"))
@@ -134,7 +136,6 @@
 					todoItem.item.remove();
 			});
 
-			// localStorage.setItem(my_key, JSON.stringify(storage));
 			todoList.append(todoItem.item);
 			
 			storage.push({ value: todoItemForm.input.value, status: todoItem.item.classList.contains('list-group-item-success')});

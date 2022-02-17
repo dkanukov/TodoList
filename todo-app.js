@@ -70,7 +70,7 @@
 		};
 	}
 
-	function createTodoApp(container, title = 'Мои дела') {
+	function createTodoApp(container, defaultItems, title = 'Мои дела') {
 
 		let todoAppTitle = createAppTitle(title);
 		let todoItemForm = createTodoItemForm();
@@ -80,6 +80,23 @@
 		container.append(todoItemForm.form);
 		container.append(todoList);
 
+		if (defaultItems) {
+			defaultItems.forEach(element => {
+				let todoDefItem = createTodoItem(element.name);
+				todoDefItem.doneButton.addEventListener('click', function() {
+					todoDefItem.item.classList.toggle('list-group-item-success');
+				});
+				todoDefItem.deleteButton.addEventListener('click', function() {
+					if (confirm("Вы уверенны?"))
+						todoDefItem.item.remove();
+				});
+				if (element.done)
+					todoDefItem.item.classList.add('list-group-item-success');
+				todoList.append(todoDefItem.item);
+				todoItemForm.input.value = '';
+			});
+		}
+		
 		//	work with submit button 
 		todoItemForm.form.addEventListener('submit', function(event){
 			event.preventDefault();

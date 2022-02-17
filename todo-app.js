@@ -72,7 +72,7 @@
 
 	function createTodoApp(container, my_key, defaultItems = null, title = 'Мои дела') {
 
-		let	storage = [];
+		let	storage;
 		let todoAppTitle = createAppTitle(title);
 		let todoItemForm = createTodoItemForm();
 		let	todoList = createTodoList();
@@ -103,8 +103,20 @@
 		else
 			storage = JSON.parse(localStorage.getItem(my_key));
 
-		
-		
+		storage.forEach(element => {
+			let todoStorageItem = createTodoItem(element.value);
+			todoStorageItem.doneButton.addEventListener('click', function() {
+				todoStorageItem.item.classList.toggle('list-group-item-success');
+			});
+			todoStorageItem.deleteButton.addEventListener('click', function() {
+				if (confirm("Вы уверенны?"))
+					todoStorageItem.item.remove();
+			});
+			if (element.status)
+				todoStorageItem.item.classList.add('list-group-item-success');
+			todoList.append(todoStorageItem.item);
+		});
+
 		//	work with submit button 
 		todoItemForm.form.addEventListener('submit', function(event){
 

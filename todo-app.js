@@ -70,8 +70,9 @@
 		};
 	}
 
-	function createTodoApp(container, defaultItems, title = 'Мои дела') {
+	function createTodoApp(container, my_key, defaultItems = null, title = 'Мои дела') {
 
+		let	storage = [];
 		let todoAppTitle = createAppTitle(title);
 		let todoItemForm = createTodoItemForm();
 		let	todoList = createTodoList();
@@ -96,15 +97,22 @@
 				todoItemForm.input.value = '';
 			});
 		}
+
+		if (localStorage.getItem(my_key) == null)
+			storage = [];
+		else
+			storage = JSON.parse(localStorage.getItem(my_key));
+
+		
 		
 		//	work with submit button 
 		todoItemForm.form.addEventListener('submit', function(event){
+
 			event.preventDefault();
 			if (!todoItemForm.input.value)
 				return;
 			
 			let todoItem = createTodoItem(todoItemForm.input.value);
-
 			todoItem.doneButton.addEventListener('click', function() {
 				todoItem.item.classList.toggle('list-group-item-success');
 			});
@@ -114,7 +122,11 @@
 					todoItem.item.remove();
 			});
 
+			// localStorage.setItem(my_key, JSON.stringify(storage));
 			todoList.append(todoItem.item);
+			
+			storage.push({ value: todoItemForm.input.value, status: todoItem.item.classList.contains('list-group-item-success')});
+			localStorage.setItem(my_key, JSON.stringify(storage));
 
 			todoItemForm.input.value = '';
 		});
